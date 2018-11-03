@@ -1,0 +1,18 @@
+from flask import Flask
+from flask import jsonify
+import multiprocessing
+import socket;
+import shutil;
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    total, used, free = shutil.disk_usage("\\")
+    total=(total // (2**30))
+    return jsonify('hostname: '  + socket.gethostname(),"local ip: " +socket.gethostbyname(socket.gethostname()),"no of cpus: "+ str(multiprocessing.cpu_count()),"memory: "+str(total))
+    
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8080)  # Enable reloader and debugger
